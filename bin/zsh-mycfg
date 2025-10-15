@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+env ZDOTDIR="$HOME/my/config/zsh" zsh "$@"
