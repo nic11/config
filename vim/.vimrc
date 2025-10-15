@@ -7,8 +7,37 @@ set tabstop=2
 " Enable mouse support in all modes
 set mouse=a
 
-" Sync with system clipboard (MSYS2 uses 'unnamedplus')
-" set clipboard+=unnamedplus
+if ! has('clipboard')
+  echo "no clipboard support"
+endif
+
+" set clipboard+=unnamed
+" set paste
+" set go+=a
+
+" set clipboard=unnamed,unnamedplus
+
+function! s:has_wl_clipboard() abort
+  return executable('wl-copy') && executable('wl-paste')
+endfunction
+
+augroup wl-clipboard-paste
+  autocmd!
+"   autocmd FocusLost * :call system('wl-copy', @+)
+  autocmd FocusGained * if s:has_wl_clipboard()
+        \ | let @+ = system('wl-paste -n')
+        \ | endif
+augroup END
+
+augroup wl-clipboard-sync
+  autocmd!
+  autocmd TextYankPost * if s:has_wl_clipboard()
+        \ | call system('wl-copy', v:event.regcontents)
+        \ | endif
+  autocmd InsertEnter * if s:has_wl_clipboard()
+        \ | let @+ = system('wl-paste -n')
+        \ | endif
+augroup END
 
 " set relativenumber
 set number relativenumber
