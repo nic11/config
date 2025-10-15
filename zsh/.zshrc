@@ -1,9 +1,4 @@
-export ZSH="$HOME/my/config/zsh/ohmyzsh"
-ZSH_THEME="robbyrussell"
-
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
+. "$ZDOTDIR/spaceship-prompt/spaceship.zsh"
 
 export EDITOR=vim
 
@@ -41,6 +36,6 @@ pdf_gs() {
     return "$ret"
 }
 
-if [ -f "$HOME/my/config/zsh/.zshrc_local" ]; then
-  . "$HOME/my/config/zsh/.zshrc_local"
+if [ -f "$ZDOTDIR/.zshrc_local" ]; then
+  . "$ZDOTDIR/.zshrc_local"
 fi
