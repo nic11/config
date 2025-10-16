@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 
-export N11_CONF="$HOME/my/config"
-exec env ZDOTDIR="$HOME/my/config/zsh" zsh "$@"
+if [ -z "$N11_CONF" ]; then
+  export N11_CONF="$(dirname "$0")/.."
+fi
+exec env ZDOTDIR="$N11_CONF/zsh" zsh "$@"
