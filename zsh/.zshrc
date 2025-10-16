@@ -142,6 +142,11 @@ pdf_gs() {
     return "$ret"
 }
 
+mkcd() {
+  mkdir -p "$1"
+  cd "$1"
+}
+
 # see also `type` https://stackoverflow.com/a/7522726
 if (( $+commands[hstr] )); then
   alias hh=hstr                    # hh to be alias for hstr
