@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
+export N11_CONF="$HOME/my/config"
 exec env ZDOTDIR="$HOME/my/config/zsh" zsh "$@"

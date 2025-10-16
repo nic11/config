@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
+export N11_CONF="$HOME/my/config"
 exec tmux -f ~/my/config/tmux/.tmux.conf -L nic11tmux "$@"
