@@ -51,11 +51,11 @@ SPACESHIP_PROMPT_ORDER=(
   # pulumi         # Pulumi stack section
   # ibmcloud       # IBM Cloud section
   nix_shell      # Nix shell
-  gnu_screen     # GNU Screen section
+  # gnu_screen     # GNU Screen section
   exec_time      # Execution time
   # async          # Async jobs indicator
   # line_sep       # Line break
-  battery        # Battery level and status
+  # battery        # Battery level and status
   jobs           # Background jobs indicator
   exit_code      # Exit code section
   sudo           # Sudo indicator
@@ -78,6 +78,14 @@ bindkey '^[[6~' end-of-buffer-or-history          # page down
 bindkey '^[[H' beginning-of-line                  # home
 bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
+# TODO: other stuff from https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/key-bindings.zsh
 
 export EDITOR=vim
 
@@ -133,6 +141,28 @@ pdf_gs() {
     set +x
     return "$ret"
 }
+
+# see also `type` https://stackoverflow.com/a/7522726
+if (( $+commands[hstr] )); then
+  alias hh=hstr                    # hh to be alias for hstr
+  setopt histignorespace           # skip cmds w/ leading space from history
+  export HSTR_CONFIG=hicolor       # get more colors
+  hstr_no_tiocsti() {
+      zle -I
+      { HSTR_OUT="$( { </dev/tty hstr ${BUFFER}; } 2>&1 1>&3 3>&- )"; } 3>&1;
+      BUFFER="${HSTR_OUT}"
+      CURSOR=${#BUFFER}
+      zle redisplay
+  }
+  zle -N hstr_no_tiocsti
+  bindkey '\C-r' hstr_no_tiocsti
+  export HSTR_TIOCSTI=n
+
+  # M-r as original ^R
+  bindkey '^[r' history-incremental-search-backward
+
+  # TODO: fix multiline
+fi
 
 if [ -f "$ZDOTDIR/.zshrc_local" ]; then
   . "$ZDOTDIR/.zshrc_local"
