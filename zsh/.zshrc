@@ -62,6 +62,7 @@ SPACESHIP_PROMPT_ORDER=(
   char           # Prompt character
 )
 
+SPACESHIP_TIME_SHOW=true
 SPACESHIP_CHAR_SYMBOL=$'\n$ '
 
 . "$ZDOTDIR/spaceship-prompt/spaceship.zsh"
