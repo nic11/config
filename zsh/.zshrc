@@ -100,6 +100,8 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history          # share command history data
 
+setopt INTERACTIVE_COMMENTS
+
 # force zsh to show the complete history
 alias history="history 0"
 
