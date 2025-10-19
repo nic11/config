@@ -174,6 +174,22 @@ if (( $+commands[hstr] )); then
   # TODO: fix multiline
 fi
 
+if (( $+commands[broot] )); then
+  function br {
+    local cmd cmd_file code
+    cmd_file=$(mktemp)
+    if broot --outcmd "$cmd_file" "$@"; then
+      cmd=$(<"$cmd_file")
+      command rm -f "$cmd_file"
+      eval "$cmd"
+    else
+      code=$?
+      command rm -f "$cmd_file"
+      return "$code"
+    fi
+  }
+fi
+
 if [ -f "$ZDOTDIR/.zshrc_local" ]; then
   . "$ZDOTDIR/.zshrc_local"
 fi
