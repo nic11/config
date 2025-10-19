@@ -106,7 +106,9 @@ setopt INTERACTIVE_COMMENTS
 alias history="history 0"
 
 autoload -U compinit && compinit
-zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'  # case insensitive
+zstyle ':completion:*' menu select  # highlight
+# https://thevaluable.dev/zsh-completion-guide-examples/
 
 # TODO: marlonrichert/zsh-autocomplete ?
 # TODO: z-shell/zsh-select / fzf
