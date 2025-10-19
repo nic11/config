@@ -322,6 +322,13 @@ handle_mime() {
         image/*)
             ## Preview as text conversion
             # img2txt --gamma=0.6 --width="${PV_WIDTH}" -- "${FILE_PATH}" && exit 4
+
+            # Fallback for when we don't have kitty outside tmux (most cases lol)
+            # https://www.hackitu.de/ranger_color_commands/
+            chafa -d 0 -f symbols -c 240 --fg-only --bg black \
+              --preprocess on --dither diffusion --fill none --symbols all-wide-inverted-ascii-technical \
+              -s "${PV_WIDTH}x${PV_HEIGHT}" -- "${FILE_PATH}" && exit 4
+
             exiftool "${FILE_PATH}" && exit 5
             exit 1;;
 
