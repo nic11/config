@@ -1,0 +1,4 @@
+.git
+/vcpkg
+yarn.lock
+package-lock.json

@@ -190,6 +190,10 @@ if (( $+commands[broot] )); then
   }
 fi
 
+# --hidden: don't skip dotfiles or .github and stuff like that
+# --ignore-file: but ignore .git and some annoying dirs/files
+alias rg="rg --hidden --ignore-file='$ZDOTDIR/../ripgrep/ignore'"
+
 if [ -f "$ZDOTDIR/.zshrc_local" ]; then
   . "$ZDOTDIR/.zshrc_local"
 fi
