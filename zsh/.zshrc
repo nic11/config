@@ -156,7 +156,7 @@ mkcd() {
 if (( $+commands[hstr] )); then
   alias hh=hstr                    # hh to be alias for hstr
   setopt histignorespace           # skip cmds w/ leading space from history
-  export HSTR_CONFIG=hicolor       # get more colors
+  export HSTR_CONFIG=hicolor,raw-history-view
   hstr_no_tiocsti() {
       zle -I
       { HSTR_OUT="$( { </dev/tty hstr ${BUFFER}; } 2>&1 1>&3 3>&- )"; } 3>&1;
