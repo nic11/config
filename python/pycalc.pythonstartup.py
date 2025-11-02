@@ -3,6 +3,13 @@ from datetime import datetime as dt, timedelta as td
 from typing import Union
 
 # if you happen to read this, don't judge me...
+# in my defence, it's convenient:
+# >>> dd('20251011 +51d')
+# datetime.datetime(2025, 12, 1, 0, 0)
+# >>> dd('today +51d')
+# datetime.datetime(2025, 12, 23, 0, 0)
+# >>> dd('today +51d -52d')
+# datetime.datetime(2025, 11, 1, 0, 0)
 def dd(*args: Union[dt, td, str]):
     cur = dt.now()
     for arg_raw in args:
@@ -18,10 +25,10 @@ def dd(*args: Union[dt, td, str]):
         for arg in arg_raw.split():
             if arg == '':
                 continue
-            if arg == 'now':
+            if arg == 'now' or arg == 'n':
                 cur = dt.now()
                 continue
-            if arg == 'today':
+            if arg == 'today' or arg == 't':
                 now = dt.now()
                 cur = dt(year=now.year, month=now.month, day=now.day)
                 continue
