@@ -194,6 +194,8 @@ fi
 # --ignore-file: but ignore .git and some annoying dirs/files
 alias rg="rg --hidden --ignore-file='$ZDOTDIR/../ripgrep/ignore'"
 
+alias pycalc="PYTHONSTARTUP='$ZDOTDIR/../python/pycalc.pythonstartup.py' python"
+
 if [ -f "$ZDOTDIR/.zshrc_local" ]; then
   . "$ZDOTDIR/.zshrc_local"
 fi
