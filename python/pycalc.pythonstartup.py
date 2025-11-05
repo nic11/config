@@ -44,7 +44,10 @@ def dd(*args: Union[dt, td, str]):
                 print('invalid arg', arg)
                 continue
             k = {
+                'm': td(minutes=1),
+                'h': td(hours=1),
                 'd': td(days=1),
+                'w': td(days=7),
                 'm': td(days=30),
             }.get(arg[-1], 0)
             if k == 0:
