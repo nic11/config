@@ -75,3 +75,61 @@ class kitty(Command):
             ['kitty', '--detach', f"{os.environ['N11_CONF']}/bin/ranger-mycfg"],
             check=True
         )
+
+class tabs_save(Command):
+    """
+    :tabs_save <filename>
+
+    Saves all current tab paths to a file.
+    """
+    def execute(self):
+        filename = self.rest(1)
+        if not filename:
+            self.fm.notify("Usage: :tabs_save <filename>", bad=True)
+            return
+
+        filepath = os.path.expanduser(filename)
+        try:
+            with open(filepath, 'w') as f:
+                for tab in self.fm.tabs:
+                    f.write(tab.path + "\n")
+            self.fm.notify(f"Tabs saved to {filepath}")
+        except Exception as e:
+            self.fm.notify(f"Error saving tabs: {e}", bad=True)
+
+
+class tabs_load(Command):
+    """
+    :tabs_load <filename>
+
+    Loads tabs from a file. Loads first path in current tab,
+    and all others in new tabs.
+    """
+    def execute(self):
+        filename = self.rest(1)
+        if not filename:
+            self.fm.notify("Usage: :tabs_load <filename>", bad=True)
+            return
+
+        filepath = os.path.expanduser(filename)
+        if not os.path.exists(filepath):
+            self.fm.notify(f"File not found: {filepath}", bad=True)
+            return
+
+        try:
+            with open(filepath, 'r') as f:
+                paths = [line.strip() for line in f if line.strip()]
+        except Exception as e:
+            self.fm.notify(f"Error reading file: {e}", bad=True)
+            return
+
+        if not paths:
+            self.fm.notify("No tab paths found in file.", bad=True)
+            return
+
+        self.fm.cd(paths[0])
+
+        for path in paths[1:]:
+            self.fm.tab_new(path)
+
+        self.fm.notify(f"Loaded {len(paths)} tabs.")
