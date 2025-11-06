@@ -91,8 +91,7 @@ class tabs_save(Command):
         filepath = os.path.expanduser(filename)
         try:
             with open(filepath, 'w') as f:
-                for tab in self.fm.tabs:
-                    f.write(tab.path + "\n")
+                print('\n'.join(map(lambda t: t.path, self.fm.tabs.values())), file=f)
             self.fm.notify(f"Tabs saved to {filepath}")
         except Exception as e:
             self.fm.notify(f"Error saving tabs: {e}", bad=True)
