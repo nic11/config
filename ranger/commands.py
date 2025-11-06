@@ -83,14 +83,20 @@ class tabs_save(Command):
     Saves all current tab paths to a file.
     """
     def execute(self):
-        filename = self.rest(1)
+        filename = self.arg(1)
         if not filename:
             self.fm.notify("Usage: :tabs_save <filename>", bad=True)
             return
+        mode = self.arg(2) or 'create'
 
         filepath = os.path.expanduser(filename)
         try:
-            with open(filepath, 'w') as f:
+            if os.path.exists(filepath):
+                self.fm.notify(f"File exists! Repeat as :tabs_save <filename> <overwrite|append>", bad=True)
+                return
+            with open(filepath, 'w' if mode != 'append' else 'a') as f:
+                if mode == 'append':
+                    print(file=f)  # append an empty line first
                 print('\n'.join(map(lambda t: t.path, self.fm.tabs.values())), file=f)
             self.fm.notify(f"Tabs saved to {filepath}")
         except Exception as e:
