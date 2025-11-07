@@ -64,12 +64,12 @@ nnoremap <F3> /<C-r>"
 nnoremap <S-F3> :set hlsearch!<CR>
 
 set list
-set listchars=tab:❯\ ,leadmultispace:·\ ,trail:·,nbsp:␣
+set listchars=tab:❯\ ,multispace:\ ·,leadmultispace:·\ ,trail:·,nbsp:␣
 hi SpecialKey cterm=NONE guifg=#555555
 nnoremap <Leader>l :set list!<CR>
 
-hi ExtraWhitespace guifg=#ff5555
-match ExtraWhitespace /\s\+$/
+hi TrailingWhitespace guifg=#ff5555
+match TrailingWhitespace /\s\+$/
 
 " /usr/share/vim/vim91/defaults.vim
 " Only do this part when Vim was compiled with the +eval feature.
