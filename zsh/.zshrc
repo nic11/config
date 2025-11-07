@@ -196,6 +196,31 @@ alias rg="rg --hidden --ignore-file='$ZDOTDIR/../ripgrep/ignore'"
 
 alias pycalc="PYTHONSTARTUP='$ZDOTDIR/../python/pycalc.pythonstartup.py' python"
 
+_get_git_default_branch() {
+  local branch_name
+  branch_name=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null)
+
+  if [[ -n "$branch_name" ]]; then
+    # remove origin/
+    echo "${branch_name#origin/}"
+  elif git show-ref --verify --quiet refs/heads/main; then
+    echo "main"
+  elif git show-ref --verify --quiet refs/heads/master; then
+    echo "master"
+  else
+    echo "$1"
+  fi
+}
+
+# substitute everywhere
+alias -g GITMASTER='$(_get_git_default_branch \master)'
+alias -g GITMAIN='$(_get_git_default_branch \main)'
+alias -g master='$(_get_git_default_branch \master)'
+alias -g main='$(_get_git_default_branch \main)'
+alias -g 'master:master'='$(_get_git_default_branch \master):$(_get_git_default_branch \master)'
+alias -g 'main:main'='$(_get_git_default_branch \master):$(_get_git_default_branch \master)'
+alias -g GITBASE='$(git merge-base $(_get_git_default_branch \master) HEAD)'
+
 if [ -f "$ZDOTDIR/.zshrc_local" ]; then
   . "$ZDOTDIR/.zshrc_local"
 fi
