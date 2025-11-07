@@ -59,6 +59,9 @@ set fileformat=unix
 
 set hlsearch
 
+set list
+set listchars=tab:❯\ ,leadmultispace:·\ ,trail:·,nbsp:␣
+
 " /usr/share/vim/vim91/defaults.vim
 " Only do this part when Vim was compiled with the +eval feature.
 if 1
