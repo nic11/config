@@ -203,9 +203,9 @@ _get_git_default_branch() {
   if [[ -n "$branch_name" ]]; then
     # remove origin/
     echo "${branch_name#origin/}"
-  elif git show-ref --verify --quiet refs/heads/main; then
+  elif git show-ref --verify --quiet refs/heads/main 2>/dev/null; then
     echo "main"
-  elif git show-ref --verify --quiet refs/heads/master; then
+  elif git show-ref --verify --quiet refs/heads/master 2>/dev/null; then
     echo "master"
   else
     echo "$1"
