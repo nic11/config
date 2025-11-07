@@ -58,6 +58,10 @@ set fileformats=unix,dos
 set fileformat=unix
 
 set hlsearch
+" nnoremap <F3> :set hlsearch<CR>n
+" vv fill from " register (y)
+nnoremap <F3> /<C-r>"
+nnoremap <S-F3> :set hlsearch!<CR>
 
 set list
 set listchars=tab:❯\ ,leadmultispace:·\ ,trail:·,nbsp:␣
