@@ -221,6 +221,53 @@ alias -g 'master:master'='$(_get_git_default_branch \master):$(_get_git_default_
 alias -g 'main:main'='$(_get_git_default_branch \master):$(_get_git_default_branch \master)'
 alias -g GITBASE='$(git merge-base $(_get_git_default_branch \master) HEAD)'
 
+wl-copy-files() {
+  if (( $+commands[wl-copy] )); then
+    echo "no wl-clipboard"
+    return 1
+  fi
+  if [ -z "$1" ]; then
+    echo "expected non-empty args"
+    return 1
+  fi
+
+  for path in "$@"; do
+    # no idea why, but just realpath didn't work (but wl-copy works)
+    # echo "$PATH"
+    # echo "$(echo "$PATH")"
+    # ^ same, at least at the beginning of the func
+    echo "file://$(/usr/bin/realpath "$path")"
+  done | wl-copy -t text/uri-list -n
+
+  wl-paste
+}
+
+win-copy-files() {
+  if (( $+commands[cygpath] )); then
+    echo "not msys2/cygwin"
+    return 1
+  fi
+  if [ -z "$1" ]; then
+    echo "expected non-empty args"
+    return 1
+  fi
+
+  local path_array=()
+  for path in "$@"; do
+    path_array+=("$(cygpath -w "$path")")
+  done
+
+  local ps_path_list
+  ps_path_list=$(printf "'%s'," "${path_array[@]}")
+  ps_path_list=${ps_path_list%,}  # remove the trailing comma
+
+  cmd=(powershell.exe -NoProfile -Command "Set-Clipboard -Path $ps_path_list")
+  echo "${cmd[@]}"
+  "${cmd[@]}"
+
+  cat /dev/clipboard | hexdump -C | head -15
+}
+
 if [ -f "$ZDOTDIR/.zshrc_local" ]; then
   . "$ZDOTDIR/.zshrc_local"
 fi
