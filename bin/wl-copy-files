@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import subprocess
+
+args = sys.argv[1:]
+
+if not args:
+    print('expected non-empty args', file=sys.stderr)
+    sys.exit(1)
+
+uris = ''
+
+for arg in args:
+    uris += f'file://{os.path.realpath(arg)}\n'
+
+#print(uris.strip())
+
+subprocess.run(
+    ["wl-copy", "-t", "text/uri-list", "-n"],
+    input=uris,
+    text=True,
+    check=True,
+)

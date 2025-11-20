@@ -56,6 +56,7 @@ class YankContentWl(Command):
                 self.fm.notify("{} is not a file".format(file.relative_path))
                 return
         if file.is_binary or file.image:
+            # FIXME: does not respect EXIF rotation
             with open(file.path, 'r') as f:
                 subprocess.run(
                     ['wl-copy'],
@@ -64,6 +65,13 @@ class YankContentWl(Command):
                 )
         else:
             self.fm.notify("{} is not an image file or a text file".format(file.relative_path))
+
+class yank_files(Command):
+    def execute(self):
+        subprocess.run(
+            [f"{os.environ['N11_CONF']}/bin/wl-copy-files"] + [f.path for f in self.fm.thisdir.get_selection()],
+            check=True,
+        )
 
 class restart(Command):
     def execute(self):
