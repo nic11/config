@@ -63,6 +63,11 @@ set hlsearch
 nnoremap <F3> /<C-r>"
 nnoremap <S-F3> :set hlsearch!<CR>
 
+" memo:
+" \c to ignore, \C to match case
+" toggle: :set ic! ic?
+set ignorecase
+
 set list
 set listchars=tab:❯\ ,multispace:\ ·,leadmultispace:·\ ,trail:·,nbsp:␣
 hi SpecialKey cterm=NONE guifg=#555555
