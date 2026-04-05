@@ -102,6 +102,10 @@ setopt share_history          # share command history data
 
 setopt INTERACTIVE_COMMENTS
 
+set -o noclobber
+alias cp='cp -i'
+alias mv='mv -i'
+
 # force zsh to show the complete history
 alias history="history 0"
 
