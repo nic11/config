@@ -90,6 +90,9 @@ bindkey '^X^E' edit-command-line
 
 export EDITOR=vim
 
+# https://github.com/nix-community/comma
+export COMMA_ASK_TO_CONFIRM=true
+
 # History configurations
 HISTFILE=~/.zsh_history
 HISTSIZE=200100
@@ -105,6 +108,7 @@ setopt INTERACTIVE_COMMENTS
 set -o noclobber
 alias cp='cp -i'
 alias mv='mv -i'
+alias pp='echo "$PATH"'
 
 # force zsh to show the complete history
 alias history="history 0"

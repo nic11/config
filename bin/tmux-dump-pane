@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e -o pipefail
+
+if [ -z "$N11_TMUX_DUMP_DIR" ]; then
+  echo undef
+  exit 1
+fi
+
+if [ -z "$1" ]; then
+  echo undef
+  exit 1
+fi
+
+filename="$(uuidgen)"
+target="$N11_TMUX_DUMP_DIR/$filename"
+
+set -x
+
+tmux capture-pane -p -S - > "$target"
+ln -s "$target" "$1/$filename"

@@ -1,6 +1,8 @@
 from math import *
 from datetime import datetime as dt, timedelta as td
 from typing import Union
+import random
+from random import randint
 
 # if you happen to read this, don't judge me...
 # in my defence, it's convenient:
@@ -55,3 +57,10 @@ def dd(*args: Union[dt, td, str]):
                 continue
             cur += sign * float(arg[1:-1]) * k
     return cur
+
+def src():
+    import subprocess
+    import os
+    subprocess.run(['vim', os.environ['PYTHONSTARTUP']])
+
+print('memo: src() to edit')
