@@ -108,7 +108,6 @@ setopt INTERACTIVE_COMMENTS
 set -o noclobber
 alias cp='cp -i'
 alias mv='mv -i'
-alias pp='echo "$PATH"'
 
 # force zsh to show the complete history
 alias history="history 0"
@@ -274,6 +273,26 @@ win-copy-files() {
   "${cmd[@]}"
 
   cat /dev/clipboard | hexdump -C | head -15
+}
+
+pp() {
+  echo "path: $PATH"
+  local remind=0
+  while [ -n "$1" ]; do
+    local name="$1"
+    shift
+    local in_path=""
+    if ! in_path="$(which "$name")"; then
+      echo "$name: not found by which"
+      continue
+    fi
+    local real_path="$(realpath "$in_path")"
+    echo "$name: $in_path -> $real_path"
+    remind=1
+  done
+  if (( remind )); then
+    echo 'reminder: namei to fully unfold'
+  fi
 }
 
 if [ -f "$ZDOTDIR/.zshrc_local" ]; then
