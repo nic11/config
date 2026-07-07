@@ -298,3 +298,7 @@ pp() {
 if [ -f "$ZDOTDIR/.zshrc_local" ]; then
   . "$ZDOTDIR/.zshrc_local"
 fi
+
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+  . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
