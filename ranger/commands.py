@@ -80,7 +80,10 @@ class restart(Command):
 class kitty(Command):
     def execute(self):
         subprocess.run(
-            ['kitty', '--detach', f"{os.environ['N11_CONF']}/bin/ranger-mycfg"],
+            [
+                'env', '-u', 'TMUX', '-u', 'TERM_PROGRAM', '-u', 'TMUX_PANE',
+                'kitty', '--detach', f"{os.environ['N11_CONF']}/bin/ranger-mycfg",
+            ],
             check=True
         )
 
