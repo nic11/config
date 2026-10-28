@@ -81,8 +81,16 @@ class kitty(Command):
     def execute(self):
         subprocess.run(
             [
-                'env', '-u', 'TMUX', '-u', 'TERM_PROGRAM', '-u', 'TMUX_PANE',
-                'kitty', '--detach', f"{os.environ['N11_CONF']}/bin/ranger-mycfg",
+                'env',
+                '-u', 'TERM_PROGRAM',
+                '-u', 'TERM_PROGRAM_VERSION',
+                '-u', 'TMUX',
+                '-u', 'TMUX_PANE',
+                '-u', 'KONSOLE_DBUS_ACTIVATION_COOKIE',
+                '-u', 'KONSOLE_DBUS_WINDOW',
+                'kitty',
+                '--detach',
+                f"{os.environ['N11_CONF']}/bin/ranger-mycfg",
             ],
             check=True
         )
